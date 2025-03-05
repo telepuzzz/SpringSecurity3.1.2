@@ -12,17 +12,16 @@ import java.util.Set;
 
 @Component
 public class SuccessUserHandler implements AuthenticationSuccessHandler {
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
         System.out.println("User roles: " + roles);
         if (roles.contains("ROLE_ADMIN")) {
             response.sendRedirect("/users");
-        } else if (roles.contains("ROLE_USER")) {
-            response.sendRedirect("/user");
         } else {
-            response.sendError(HttpServletResponse.SC_FORBIDDEN, "Доступ запрещен: Неверная роль пользователя.");
+            response.sendRedirect("/user");
         }
     }
-
 }
+

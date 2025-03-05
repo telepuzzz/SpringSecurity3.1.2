@@ -67,6 +67,7 @@ public class AdminController {
     }
 
 
+
     @GetMapping("/{id}/delete")
     public String delete(@PathVariable("id") Long id) {
         userService.deleteUser(id);

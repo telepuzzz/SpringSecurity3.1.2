@@ -8,6 +8,21 @@
 <h1>Ваш профиль</h1>
 <p>Логин: <span th:text="${user.username}"></span></p>
 <p>Email: <span th:text="${user.email}"></span></p>
+
+<h2>Изменить пароль</h2>
+<form action="/user/change-password" method="post">
+    <label for="currentPassword">Текущий пароль:</label>
+    <input type="password" id="currentPassword" name="currentPassword" required><br><br>
+
+    <label for="newPassword">Новый пароль:</label>
+    <input type="password" id="newPassword" name="newPassword" required><br><br>
+
+    <label for="confirmPassword">Подтвердите новый пароль:</label>
+    <input type="password" id="confirmPassword" name="confirmPassword" required><br><br>
+
+    <button type="submit">Изменить пароль</button>
+</form>
+
 <br>
 <a href="/logout">Выйти</a>
 </body>

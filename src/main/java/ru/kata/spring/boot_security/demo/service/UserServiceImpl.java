@@ -14,9 +14,11 @@ import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 import ru.kata.spring.boot_security.demo.repository.UserRepository;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService, UserDetailsService {
@@ -73,24 +75,36 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 System.out.println("Роль ROLE_USER не найдена");
             }
         }
-        System.out.println(user.getRoles());
+
+        userRepository.save(user);
 
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        System.out.println("Проверяем пользователя: " + username);
+
         User user = userRepository.findByUsername(username);
         if (user == null) {
-            throw new UsernameNotFoundException("Пользователь не найден: " + username);
+            System.out.println("Пользователь не найден!");
+            throw new UsernameNotFoundException("User not found");
         }
 
-        Set<GrantedAuthority> authorities = new HashSet<>();
-        for (Role role : user.getRoles()) {
-            authorities.add(new SimpleGrantedAuthority(role.getName()));
-        }
+        System.out.println("Найден: " + user.getUsername() + ", пароль: " + user.getPassword());
+
+        Collection<? extends GrantedAuthority> authorities = user.getRoles()
+                .stream()
+                .map(role -> new SimpleGrantedAuthority(role.getName()))
+                .collect(Collectors.toList());
+
+        System.out.println("Роли: " + authorities);
+        boolean isPasswordCorrect = passwordEncoder.matches("user", user.getPassword());
+        System.out.println("Пароль верный? " + isPasswordCorrect);
+
+        System.out.println(passwordEncoder.encode("user"));
+
 
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
     }
 }
-
 
