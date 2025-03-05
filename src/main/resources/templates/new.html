@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавление пользователя</title>
+</head>
+<body>
+<h1>Добавление нового пользователя</h1>
+<form action="/users" method="post">
+    <label>
+        <input type="text" name="username" placeholder="Логин" required>
+    </label>
+    <label>
+        <input type="email" name="email" placeholder="Email" required>
+    </label>
+    <label>
+        <input type="password" name="password" placeholder="Пароль" required>
+    </label>
+    <button type="submit">Добавить</button>
+</form>
+<br>
+<a href="/users">Назад</a>
+</body>
+</html>
+
+

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Список пользователей</title>
+</head>
+<body>
+<h1>Список пользователей</h1>
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Логин</th>
+        <th>Email</th>
+        <th>Роли</th>
+        <th>Действия</th>
+    </tr>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.id}"></td>
+        <td th:text="${user.username}"></td>
+        <td th:text="${user.email}"></td>
+        <td th:text="${user.roles}"></td>
+        <td>
+            <a th:href="@{/users/{id}/edit(id=${user.id})}">Редактировать</a>
+            <a th:href="@{/users/{id}/delete(id=${user.id})}">Удалить</a>
+        </td>
+    </tr>
+</table>
+<br>
+<a href="/users/new">Добавить пользователя</a>
+<br><br>
+<a href="/logout">Выйти</a>
+</body>
+</html>
